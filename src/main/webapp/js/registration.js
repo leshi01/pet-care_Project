@@ -351,7 +351,6 @@ function PostUser() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 const responseData = JSON.parse(xhr.responseText);
-                console.log("hiiiiiiiiiiii");
                 login();
             } else {
                 ajaxContent.html('Request failed. Returned status of ' + xhr.status + "<br>");

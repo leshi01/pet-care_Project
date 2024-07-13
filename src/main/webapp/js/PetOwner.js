@@ -2,8 +2,11 @@ window.onload = function () {
     getAllKeepers();
 };
 
+document.getElementById('edit-user').addEventListener('click', function () {
+    window.location.href = 'EditUser.html';
+});
 
-function createTableFromJSON(data) {
+function createTableFromJSON(data){
     var html = "<table><tr><th>Category</th><th>Value</th></tr>";
     for (const x in data) {
         var category = x;
@@ -21,7 +24,7 @@ function createTableFromJSON(data) {
 function getAllKeepers() {
     // Make an AJAX request to fetch pet keepers
     $.ajax({
-        url: 'GetAllPetKeepers?', // Replace with the actual URL to your servlet
+        url: 'GetAllPetKeepers?', 
         type: 'GET',
         dataType: 'json',
         success: function (data) {
