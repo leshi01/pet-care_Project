@@ -351,8 +351,8 @@ function PostUser() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 const responseData = JSON.parse(xhr.responseText);
-                ajaxContent.html("Successful Registration. Now please log in!<br> Your Data");
-                ajaxContent.append(createTableFromJSON(responseData));
+                console.log("hiiiiiiiiiiii");
+                login();
             } else {
                 ajaxContent.html('Request failed. Returned status of ' + xhr.status + "<br>");
                 try {
@@ -378,4 +378,13 @@ function PostUser() {
     xhr.open('POST', 'Register?');
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(data));
+}
+
+
+function login(){
+    if (userType.value == "Pet Keeper") {
+        window.location.href = 'PetKeeper.html';
+    } else if (userType.value == "Pet Owner") {
+        window.location.href = 'PetOwner.html';
+    }
 }
