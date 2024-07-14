@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="css/EditUser.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+</head>
+<body>
+
+    <form id="formForEdit" onsubmit="EditUser();return false;">
+
+        <h2 id="EditUserHeader">Edit-User form</h2>
+
+        <div>
+            <label> FirstName: </label>
+            <input type="text" name="firstname" placeholder="Firstname" pattern="^[^0-9][a-zA-Z0-9]{7,}" >
+        </div>
+
+        <div>
+            <label> LastName: </label>
+            <input type="text" name="lastName" placeholder="LastName" pattern="^[^0-9][a-zA-Z0-9]{7,}" >
+        </div>
+
+        <div>
+            <label> Username: </label>
+            <input type="text" name="username" placeholder="Username" pattern="^[^0-9][a-zA-Z0-9]{7,}" >
+        </div>
+
+        <div>
+            <label for="email">Email: </label>
+            <input type="email" id="email" name="email"/>
+        </div>
+
+
+        <button type="submit" id="SaveInfo" value="save">Save</button>
+
+    </form>
+
+    <div id="ajaxContent"></div>
+
+
+    <script src="js/EditUser.js"></script>
+</body>
+</html>

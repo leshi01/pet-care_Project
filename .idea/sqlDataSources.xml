@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="50ffebc5-4505-4f22-a505-5c0f63538014" name="hy359_2023 Mapping">
+      <data-sources db="f5dd16a3-b509-4ca0-aaec-467caa361376" />
+      <scope>
+        <node kind="schema" qname="hy359_2023" />
+      </scope>
+    </mapping>
+    <mapping uuid="f98e2bf8-8ea3-44d2-b852-42b83bb21227" name="@localhost Mapping">
+      <data-sources db="b1788130-5acf-456d-8ba5-3566892dc591" />
+    </mapping>
+  </component>
+</project>
