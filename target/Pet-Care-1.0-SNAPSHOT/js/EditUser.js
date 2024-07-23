@@ -1,48 +1,62 @@
+var LoggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
 
+// Function to set default values for the form inputs
+function setDefaultValues() {
+    // Example default values
+    const defaultValues = {
+        firstname: LoggedInUser.firstname,
+        lastName: LoggedInUser.lastname,
+        username:LoggedInUser.username,
+        email: LoggedInUser.email
+    };
 
+    // Set default values
+    document.getElementsByName('firstname')[0].value = defaultValues.firstname;
+    document.getElementsByName('lastName')[0].value = defaultValues.lastName;
+    document.getElementsByName('username')[0].value = defaultValues.username;
+    document.getElementById('email').value = defaultValues.email;
+}
+
+// Call setDefaultValues on page load
+document.addEventListener('DOMContentLoaded', setDefaultValues);
 // Function to handle form submission and AJAX request
-function PostUser() {
-    const myForm = document.getElementById('formForEdit');
+function editUser() {
 
+    const myForm = document.getElementById('formForEdit');
     const formData = new FormData(myForm);
 
-   formData.forEach((value, key) => {
-       formData.append(key, value);
-   });
+    // Correctly convert FormData to a JSON object
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
 
+    data.user = LoggedInUser.username;
 
     const xhr = new XMLHttpRequest();
 
-    // Event handler for the response
+    // Simplified event handler for the response
     xhr.onload = function () {
-        const ajaxContent = $('#ajaxContent');
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
+
+        if (xhr.status === 200) {
+
+            console.log(xhr.responseText);
+        } else {
+
+            try {
                 const responseData = JSON.parse(xhr.responseText);
-                login();
-            } else {
-                ajaxContent.html('Request failed. Returned status of ' + xhr.status + "<br>");
-                try {
-                    const responseData = JSON.parse(xhr.responseText);
-                    for (const key in responseData) {
-                        if (responseData.hasOwnProperty(key)) {
-                            ajaxContent.append(`<p style='color:red'>${key} = ${responseData[key]}</p>`);
-                        }
+                for (const key in responseData) {
+                    if (responseData.hasOwnProperty(key)) {
+
                     }
-                } catch (e) {
-                    ajaxContent.append(`<p style='color:red'>Error parsing response: ${xhr.responseText}</p>`);
                 }
+            } catch (e) {
+
             }
         }
     };
-
-    // Prepare data for sending
-    const data = {};
-    formData.forEach((value, key) => (data[key] = value));
-
-
     // Set up and send the request
-    xhr.open('POST', 'Register?');
+    xhr.open('POST', 'EditUser?');
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(data));
 }

@@ -33,12 +33,20 @@
         <servlet-class>servlet.Register</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>EditUser</servlet-name>
+        <servlet-class>servlet.EditUser</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>GetAllPetOwners</servlet-name>
         <servlet-class>servlet.GetAllPetOwners</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Registration</servlet-name>
         <url-pattern>/Registration</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditUser</servlet-name>
+        <url-pattern>/EditUser</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GetKeepers</servlet-name>

@@ -44,6 +44,10 @@ function getOwner() {
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
+            var userInfo = JSON.parse(xhr.responseText);
+            // Store user information in sessionStorage or localStorage
+            sessionStorage.setItem('loggedInUser', JSON.stringify(userInfo));
+
             window.location.href = 'PetOwner.html';
         } else if (xhr.status !== 200) {
             $("#ajaxContent").html("User not exists or incorrect password");

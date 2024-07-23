@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static com.mysql.cj.MysqlType.JSON;
+
 /**
  *
  * @author Mike
@@ -41,10 +43,20 @@ public class EditPetOwnersTable {
         return json;
     }
 
-    public void updatePetOwner(String username, String personalpage) throws SQLException, ClassNotFoundException {
+    public void updatePetOwner(String user, String username, String firstname, String lastname, String email) throws SQLException, ClassNotFoundException {
         Connection con = Connect.getConnection();
         Statement stmt = con.createStatement();
-        String update = "UPDATE petowners SET personalpage='" + personalpage + "' WHERE username = '" + username + "'";
+
+
+        // Redirect to the PetOwner.html page
+        String update;
+        update = "UPDATE petowners SET firstname='" + firstname + "' WHERE username = '" + user + "'";
+        stmt.executeUpdate(update);
+        update = "UPDATE petowners SET lastname='" + lastname + "' WHERE username = '" + user + "'";
+        stmt.executeUpdate(update);
+        update = "UPDATE petowners SET email='" + email + "' WHERE username = '" + user + "'";
+        stmt.executeUpdate(update);
+        update = "UPDATE petowners SET username='" + username + "' WHERE username = '" + user + "'";
         stmt.executeUpdate(update);
     }
 
