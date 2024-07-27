@@ -26,6 +26,14 @@ public class PetOwner {
         this.job = job;
     }
 
+    public void setOwner_id(int owner_id) {
+        this.owner_id = owner_id;
+    }
+
+    public int getOwner_id() {
+        return owner_id;
+    }
+
     public void setPersonalpage(String personalpage) {
         this.personalpage = personalpage;
     }

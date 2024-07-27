@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', setDefaultValues);
 // Function to handle form submission and AJAX request
 function editUser() {
 
+    console.log(LoggedInUser);
+
     const myForm = document.getElementById('formForEdit');
     const formData = new FormData(myForm);
 

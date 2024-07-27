@@ -6,6 +6,10 @@ document.getElementById('edit-user').addEventListener('click', function () {
     window.location.href = 'EditUser.html';
 });
 
+document.getElementById('add-pet').addEventListener('click', function () {
+    window.location.href = 'AddPet.html';
+});
+
 function createTableFromJSON(data){
     var html = "<table><tr><th>Category</th><th>Value</th></tr>";
     for (const x in data) {
@@ -18,9 +22,6 @@ function createTableFromJSON(data){
 
 }
 
-
-
-
 function getAllKeepers() {
     // Make an AJAX request to fetch pet keepers
     $.ajax({
@@ -28,8 +29,9 @@ function getAllKeepers() {
         type: 'GET',
         dataType: 'json',
         success: function (data) {
-            // Process the received data
+
             displayPetKeepers(data);
+
         },
         error: function (error) {
             console.error('Error fetching pet keepers:', error);
@@ -43,26 +45,16 @@ function displayPetKeepers(petKeepers) {
     petKeepersList.empty();
 
     if (petKeepers && petKeepers.length > 0) {
+        let listHTML = '<ul class="pet-keepers-list">';
 
-        let tableHTML = `<table id="table">
-                        <tr class="text">
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                        </tr>`;
-
-
-        // Loop through each pet keeper and display their details
         petKeepers.forEach(function (petKeeper) {
-            tableHTML += '<tr class="text">' +
-                    '<td> ' + petKeeper.firstname + '</td>' +
-                    '<td> ' + petKeeper.lastname + '</td>' +
-                    '</tr>';
+            // Assuming petKeeper.id is available and can be used as a unique identifier
+            listHTML += `<li><button>${petKeeper.firstname} ${petKeeper.lastname}</button></li>`;
         });
 
-        tableHTML += ('</table>');
-        petKeepersList.append(tableHTML);
+        listHTML += '</ul>';
+        petKeepersList.append(listHTML);
     } else {
         petKeepersList.append('<p>No pet keepers found.</p>');
     }
 }
-

@@ -37,6 +37,10 @@
         <servlet-class>servlet.EditUser</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>RegisterPet</servlet-name>
+        <servlet-class>servlet.RegisterPet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>GetAllPetOwners</servlet-name>
         <servlet-class>servlet.GetAllPetOwners</servlet-class>
     </servlet>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>EditUser</servlet-name>
         <url-pattern>/EditUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterPet</servlet-name>
+        <url-pattern>/RegisterPet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GetKeepers</servlet-name>
