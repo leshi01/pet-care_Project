@@ -61,6 +61,10 @@ public class Register extends HttpServlet {
             } else if (jsonString.contains("Keeper")) {
                 newPetKeeper = gson.fromJson(jsonString, PetKeeper.class);
 
+                System.out.println("json: " + jsonString);
+
+                System.out.println("new keeper:" + newPetKeeper);
+
                 EditPetKeepersTable eut = new EditPetKeepersTable();
 
                 try {

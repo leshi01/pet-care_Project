@@ -234,7 +234,7 @@ public class EditPetKeepersTable {
             //stmt.execute(table);
             System.out.println(insertQuery);
             stmt.executeUpdate(insertQuery);
-            System.out.println("# The pet owner was successfully added in the database.");
+            System.out.println("# The pet keeper was successfully added in the database.");
 
             /* Get the member id from the database and set it to the member */
             stmt.close();
