@@ -1,5 +1,9 @@
+var LoggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+var OwnerPet;
+
 window.onload = function () {
-    getAllKeepers();
+    getPets(LoggedInUser.owner_id);
+    setTimeout(getAllKeepers, 500);
 };
 
 document.getElementById('edit-user').addEventListener('click', function () {
@@ -10,24 +14,49 @@ document.getElementById('add-pet').addEventListener('click', function () {
     window.location.href = 'AddPet.html';
 });
 
-function createTableFromJSON(data){
-    var html = "<table><tr><th>Category</th><th>Value</th></tr>";
-    for (const x in data) {
-        var category = x;
-        var value = data[x];
-        html += "<tr><td>" + category + "</td><td>" + value + "</td></tr>";
-    }
-    html += "</table>";
-    return html;
 
+function getPets(ownerId) {
+    $.ajax({
+        url: 'GetOwnerPet?',
+        type: 'GET',
+        dataType: 'json',
+        data: { ownerId: LoggedInUser.owner_id },
+        success: function (data) {
+            displayPets(data);
+        },
+        error: function (error) {
+            console.error('Error fetching pets:', error);
+        }
+    });
+}
+
+function displayPets(pets) {
+
+    if (Array.isArray(pets)) {
+        pets.forEach(pet => {
+            OwnerPet = pet;
+        });
+    } else {
+        console.error('Invalid data format:', pets);
+    }
+
+    console.log(OwnerPet);
 }
 
 function getAllKeepers() {
-    // Make an AJAX request to fetch pet keepers
+
+    var type;
+    if (OwnerPet.type === "cat") {
+        type = "catKeepers";
+    } else {
+        type = "dogKeepers";
+    }
+
     $.ajax({
         url: 'GetAllPetKeepers?', 
         type: 'GET',
         dataType: 'json',
+        data: { type: type},
         success: function (data) {
 
             displayPetKeepers(data);

@@ -92,7 +92,7 @@ public class EditPetKeepersTable {
         ArrayList<PetKeeper> keepers = new ArrayList<PetKeeper>();
         ResultSet rs = null;
         try {
-            //if(type=="catkeeper")
+
             if ("all".equals(type)) {
                 rs = stmt.executeQuery("SELECT * FROM `petKeepers` WHERE  `petKeepers`.`keeper_id` not in (select keeper_id "
                         + "from `bookings` where `status`='requested' or  `status`='accepted')\n" + "");
@@ -161,38 +161,6 @@ public class EditPetKeepersTable {
         return null;
     }
 
-    public void createPetKeepersTable() throws SQLException, ClassNotFoundException {
-
-        Connection con = Connect.getConnection();
-        Statement stmt = con.createStatement();
-
-        String query = "CREATE TABLE petkeepers "
-                + "(keeper_id INTEGER not NULL AUTO_INCREMENT, "
-                + "    username VARCHAR(30) not null unique,"
-                + "    email VARCHAR(50) not null unique,	"
-                + "    password VARCHAR(32) not null,"
-                + "    firstname VARCHAR(30) not null,"
-                + "    lastname VARCHAR(30) not null,"
-                + "    birthdate DATE not null,"
-                + "    gender  VARCHAR (7) not null,"
-                + "    country VARCHAR(30) not null,"
-                + "    city VARCHAR(50) not null,"
-                + "    address VARCHAR(50) not null,"
-                + "    personalpage VARCHAR(200) not null,"
-                + "    job VARCHAR(200) not null,"
-                + "    telephone VARCHAR(14),"
-                + "    lat DOUBLE,"
-                + "    lon DOUBLE,"
-                + "    property VARCHAR(10) not null,"
-                + "    propertydescription VARCHAR(200),"
-                + "    catkeeper VARCHAR(10) not null,"
-                + "    dogkeeper VARCHAR(10) not null,"
-                + "    catprice INTEGER,"
-                + "    dogprice INTEGER,"
-                + " PRIMARY KEY (keeper_id))";
-        stmt.execute(query);
-        stmt.close();
-    }
 
     /**
      * Establish a database connection and add in the database.

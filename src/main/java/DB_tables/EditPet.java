@@ -3,15 +3,40 @@ package DB_tables;
 import DB_Connection.Connect;
 import com.google.gson.Gson;
 import mainClasses.Pet;
-import mainClasses.PetOwner;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditPet {
+
+    public ArrayList<Pet> getPets(String ownerId) throws SQLException, ClassNotFoundException {
+        Connection con = Connect.getConnection();
+        Statement stmt = con.createStatement();
+        ArrayList<Pet> pets = new ArrayList<Pet>();
+        ResultSet rs = null;
+        System.out.println(ownerId + "!!!!!!!!!!!!!!!!!!!!!!!!!1");
+        try {
+
+            rs = stmt.executeQuery("SELECT * FROM `pets` WHERE `owner_id` = '" + ownerId + "'");
+
+            while (rs.next()) {
+                String json = Connect.getResultsToJSON(rs);
+                Gson gson = new Gson();
+                Pet pet = gson.fromJson(json, Pet.class);
+                pets.add(pet);
+            }
+            return pets;
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
 
     public Pet jsonToPet(String json) {
         Gson gson = new Gson();
