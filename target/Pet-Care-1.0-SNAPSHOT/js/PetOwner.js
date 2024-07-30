@@ -3,7 +3,7 @@ var OwnerPet;
 
 window.onload = function () {
     getPets(LoggedInUser.owner_id);
-    setTimeout(getAllKeepers, 1000);
+    setTimeout(getAllKeepers, 500);
 };
 
 document.getElementById('edit-user').addEventListener('click', function () {
@@ -20,7 +20,7 @@ function getPets(ownerId) {
         url: 'GetOwnerPet?',
         type: 'GET',
         dataType: 'json',
-        data: { ownerId: LoggedInUser.owner_id },
+        data: { ownerId: ownerId },
         success: function (data) {
             displayPets(data);
         },
@@ -34,13 +34,12 @@ function displayPets(pets) {
 
     if (Array.isArray(pets)) {
         pets.forEach(pet => {
-            OwnerPet = pet;
+            sessionStorage.setItem('PetOfLoggedInOwner', JSON.stringify(pet));
+            OwnerPet = JSON.parse(sessionStorage.getItem('PetOfLoggedInOwner'));
         });
     } else {
         console.error('Invalid data format:', pets);
     }
-
-    console.log(OwnerPet);
 }
 
 function getAllKeepers() {
@@ -74,14 +73,28 @@ function displayPetKeepers(petKeepers) {
     petKeepersList.empty();
 
     if (petKeepers && petKeepers.length > 0) {
-        let listHTML = '<ul class="pet-keepers-list">';
+        let listHTML = $('<ul class="pet-keepers-list"></ul>');
 
         petKeepers.forEach(function (petKeeper) {
-            // Assuming petKeeper.id is available and can be used as a unique identifier
-            listHTML += `<li><button>${petKeeper.firstname} ${petKeeper.lastname}</button></li>`;
+            let listItem = $('<li></li>');
+            let button;
+
+            if (OwnerPet.type == "cat"){
+                button = $('<button></button>').text(`${petKeeper.firstname} ${petKeeper.lastname} ${petKeeper.catprice + "$"}`);
+            }else{
+                button = $('<button></button>').text(`${petKeeper.firstname} ${petKeeper.lastname} ${petKeeper.dogprice + "$"}`);
+            }
+
+            // Add event listener to the button
+            button.on('click', function() {
+                sessionStorage.setItem('KeeperToBook', JSON.stringify(petKeeper));
+                window.location.href = 'MakeBooking.html';
+            });
+
+            listItem.append(button);
+            listHTML.append(listItem);
         });
 
-        listHTML += '</ul>';
         petKeepersList.append(listHTML);
     } else {
         petKeepersList.append('<p>No pet keepers found.</p>');
