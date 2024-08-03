@@ -1,6 +1,8 @@
 package mainClasses;
 
 public class Pet {
+
+    private String pet_id;
     private int owner_id;
     private String name;
     private String type;
@@ -18,6 +20,14 @@ public class Pet {
 
     public void setOwner_id(int owner_id) {
         this.owner_id = owner_id;
+    }
+
+    public String getPet_id() {
+        return pet_id;
+    }
+
+    public void setPet_id(String pet_id) {
+        this.pet_id = pet_id;
     }
 
     // Getter and Setter for name

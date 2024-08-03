@@ -19,7 +19,6 @@ public class EditPet {
         Statement stmt = con.createStatement();
         ArrayList<Pet> pets = new ArrayList<Pet>();
         ResultSet rs = null;
-        System.out.println(ownerId + "!!!!!!!!!!!!!!!!!!!!!!!!!1");
         try {
 
             rs = stmt.executeQuery("SELECT * FROM `pets` WHERE `owner_id` = '" + ownerId + "'");
@@ -58,10 +57,12 @@ public class EditPet {
 
             Statement stmt = con.createStatement();
 
+            pet.setPet_id(generateID(pet.getOwner_id(), pet.getBirthyear(), pet.getWeight()));
+
             String insertQuery = "INSERT INTO "
                     + "pets (pet_id, owner_id, name, type, breed, gender, birthyear, weight, description, photo)"
                     + " VALUES ("
-                    + "'" + generateID(pet.getOwner_id(), pet.getBirthyear(), pet.getWeight()) + "',"
+                    + "'" + pet.getPet_id() + "',"
                     + "'" + pet.getOwner_id() + "',"
                     + "'" + pet.getName() + "',"
                     + "'" + pet.getType() + "',"

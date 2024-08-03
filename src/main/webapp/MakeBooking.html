@@ -7,20 +7,18 @@
     <link rel="stylesheet" href="css/registration.css">
 </head>
 <body>
-
-
-    <form id="bookingForm">
+    <form id="bookingForm" name="bookingForm" onsubmit="MakeBooking();return false;">
         <h1 id="formHeader"></h1>
         <div>
-            <label for="startDate">Start Date:</label>
-            <input type="date" id="startDate" name="startDate" required>
+            <label for="fromdate">Start Date:</label>
+            <input type="date" id="fromdate" name="fromdate" required>
         </div>
         <div>
-            <label for="endDate">End Date:</label>
-            <input type="date" id="endDate" name="endDate" required>
+            <label for="todate">End Date:</label>
+            <input type="date" id="todate" name="todate" required>
         </div>
         <div>
-            <button type="submit">Book Now</button>
+            <button type="submit"  value="Register">Book Now</button>
         </div>
     </form>
 
