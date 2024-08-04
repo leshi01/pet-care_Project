@@ -42,10 +42,18 @@ public class EditPetKeepersTable {
         return json;
     }
 
-    public void updatePetKeeper(String username, String personalpage) throws SQLException, ClassNotFoundException {
+    public void updatePetKeeper(String user, String username, String firstname, String lastname, String email) throws SQLException, ClassNotFoundException {
         Connection con = Connect.getConnection();
         Statement stmt = con.createStatement();
-        String update = "UPDATE petkeepers SET personalpage='" + personalpage + "' WHERE username = '" + username + "'";
+
+        String update;
+        update = "UPDATE petkeepers SET firstname='" + firstname + "' WHERE username = '" + user + "'";
+        stmt.executeUpdate(update);
+        update = "UPDATE petkeepers SET lastname='" + lastname + "' WHERE username = '" + user + "'";
+        stmt.executeUpdate(update);
+        update = "UPDATE petkeepers SET email='" + email + "' WHERE username = '" + user + "'";
+        stmt.executeUpdate(update);
+        update = "UPDATE petkeepers SET username='" + username + "' WHERE username = '" + user + "'";
         stmt.executeUpdate(update);
     }
 

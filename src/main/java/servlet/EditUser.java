@@ -1,8 +1,11 @@
 package servlet;
 
+import DB_tables.EditPetKeepersTable;
 import DB_tables.EditPetOwnersTable;
 import com.google.gson.Gson;
 import mainClasses.EditedInfo;
+import mainClasses.PetKeeper;
+import mainClasses.PetOwner;
 
 
 import javax.servlet.ServletException;
@@ -30,27 +33,54 @@ public class EditUser extends HttpServlet {
 
         String jsonString = sb.toString();
 
-
         Gson gson = new Gson();
+
         EditedInfo user = gson.fromJson(jsonString, EditedInfo.class);
-
-        EditPetOwnersTable eut = new EditPetOwnersTable();
-
 
         try ( PrintWriter out = response.getWriter()) {
 
-            eut.updatePetOwner(user.getUser(), user.getUsername(), user.getFirstname(), user.getLastname(), user.getEmail());
-            response.setStatus(200);
-            out.println("{ \"status\": \"success\", \"message\": \"Registration successful.\" }");
+            if (jsonString.contains("Owner")) {
 
+                try {
+                    EditPetOwnersTable eut = new EditPetOwnersTable();
+
+                    eut.updatePetOwner(user.getUser(), user.getUsername(), user.getFirstname(), user.getLastname(), user.getEmail());
+
+                    response.setStatus(200);
+                    out.println("{ \"status\": \"success\", \"message\": \"Registration successful.\" }");
+
+                } catch (ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                    response.setStatus(500);
+                    out.println("{ \"status\": \"error\", \"message\": \"Internal Server Error.\" }");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+            } else if (jsonString.contains("Keeper")) {
+
+
+                EditPetKeepersTable eut = new EditPetKeepersTable();
+
+                try {
+                    eut.updatePetKeeper(user.getUser(), user.getUsername(), user.getFirstname(), user.getLastname(), user.getEmail());
+
+                    response.setStatus(200);
+                    out.println("{ \"status\": \"success\", \"message\": \"Registration successful.\" }");
+
+                } catch (ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                    response.setStatus(500);
+                    out.println("{ \"status\": \"error\", \"message\": \"Internal Server Error.\" }");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
         } catch (IOException ex) {
             ex.printStackTrace();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
+
     }
 
     @Override
