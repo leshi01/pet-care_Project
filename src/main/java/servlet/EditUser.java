@@ -39,7 +39,9 @@ public class EditUser extends HttpServlet {
 
         try ( PrintWriter out = response.getWriter()) {
 
-            if (jsonString.contains("Owner")) {
+
+            if (jsonString.contains("owner")) {
+
 
                 try {
                     EditPetOwnersTable eut = new EditPetOwnersTable();
@@ -57,8 +59,7 @@ public class EditUser extends HttpServlet {
                     throw new RuntimeException(e);
                 }
 
-            } else if (jsonString.contains("Keeper")) {
-
+            } else {
 
                 EditPetKeepersTable eut = new EditPetKeepersTable();
 

@@ -36,7 +36,9 @@ function editUser() {
     });
 
     data.user = LoggedInUser.username;
-
+    if (LoggedInUser.owner_id != null) {
+        data.type = "owner";
+    }
     const xhr = new XMLHttpRequest();
 
     // Simplified event handler for the response

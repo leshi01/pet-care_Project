@@ -41,6 +41,11 @@ function getKeeper() {
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
+            var userInfo = JSON.parse(xhr.responseText);
+
+            sessionStorage.setItem('loggedInUser', JSON.stringify(userInfo));
+            var LoggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+
             window.location.href = 'PetKeeper.html';
         } else if (xhr.status !== 200) {
             $("#ajaxContent").html("User not exists or incorrect password");

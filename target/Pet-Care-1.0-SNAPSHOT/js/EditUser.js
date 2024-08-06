@@ -2,11 +2,13 @@ var LoggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
 
 // Function to set default values for the form inputs
 function setDefaultValues() {
+
+    console.log(LoggedInUser);
     // Example default values
     const defaultValues = {
         firstname: LoggedInUser.firstname,
         lastName: LoggedInUser.lastname,
-        username:LoggedInUser.username,
+        username: LoggedInUser.username,
         email: LoggedInUser.email
     };
 
@@ -34,7 +36,9 @@ function editUser() {
     });
 
     data.user = LoggedInUser.username;
-
+    if (LoggedInUser.owner_id != null) {
+        data.type = "owner";
+    }
     const xhr = new XMLHttpRequest();
 
     // Simplified event handler for the response
