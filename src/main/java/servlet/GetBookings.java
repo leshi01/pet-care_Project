@@ -60,9 +60,31 @@ public class GetBookings extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
-    }
+        response.setContentType("application/json;charset=UTF-8");
 
+        try (PrintWriter out = response.getWriter()) {
+            EditBooking editBooking = new EditBooking();
+
+            // Parse request parameters
+            String bookingId = request.getParameter("BookingId");
+            String newStatus = request.getParameter("Status");
+            System.out.println("BookingId: " + bookingId + "Status: " + newStatus);
+
+            // Update the booking status in the database
+            boolean updateSuccess = editBooking.updateBooking(bookingId, newStatus);
+
+            // Prepare the response
+            if (updateSuccess) {
+                response.setStatus(200);
+                out.println("{\"message\": \"Booking status updated successfully.\"}");
+            } else {
+                response.setStatus(400);
+                out.println("{\"message\": \"Failed to update booking status.\"}");
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            response.setStatus(500); // Internal Server Error
+        }
+    }
     /**
      * Returns a short description of the servlet.
      *

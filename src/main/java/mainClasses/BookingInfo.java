@@ -2,6 +2,7 @@ package mainClasses;
 
 public class BookingInfo {
 
+    private int booking_id;
     private int owner_id;
     private String pet_id;
     private int keeper_id;
@@ -63,5 +64,13 @@ public class BookingInfo {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getBooking_id() {
+        return booking_id;
+    }
+
+    public void setBooking_id(int booking_id) {
+        this.booking_id = booking_id;
     }
 }

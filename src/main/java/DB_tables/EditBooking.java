@@ -22,7 +22,7 @@ public class EditBooking {
         ResultSet rs = null;
         try {
 
-            rs = stmt.executeQuery("SELECT * FROM `bookings` WHERE `keeper_id` = '" + keeperId + "' AND `status` = 'requested'");
+            rs = stmt.executeQuery("SELECT * FROM `bookings` WHERE `keeper_id` = '" + keeperId + "'");
             while (rs.next()) {
                 String json = Connect.getResultsToJSON(rs);
                 Gson gson = new Gson();
@@ -49,6 +49,17 @@ public class EditBooking {
 
         String json = gson.toJson(booking, BookingInfo.class);
         return json;
+    }
+
+    public boolean updateBooking(String bookingId, String status) throws SQLException, ClassNotFoundException {
+        Connection con = Connect.getConnection();
+        Statement stmt = con.createStatement();
+
+        String update;
+        update = "UPDATE bookings SET status='" + status + "' WHERE booking_id = '" + bookingId + "'";
+        stmt.executeUpdate(update);
+
+        return true;
     }
 
     public void addNewBooking(BookingInfo booking) throws ClassNotFoundException {
