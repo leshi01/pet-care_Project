@@ -6,12 +6,36 @@ import mainClasses.BookingInfo;
 import mainClasses.Pet;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditBooking {
+
+    public ArrayList<BookingInfo> getBookings(String keeperId) throws SQLException, ClassNotFoundException {
+        Connection con = Connect.getConnection();
+        Statement stmt = con.createStatement();
+        ArrayList<BookingInfo> Bookings = new ArrayList<BookingInfo>();
+        ResultSet rs = null;
+        try {
+
+            rs = stmt.executeQuery("SELECT * FROM `bookings` WHERE `keeper_id` = '" + keeperId + "' AND `status` = 'requested'");
+            while (rs.next()) {
+                String json = Connect.getResultsToJSON(rs);
+                Gson gson = new Gson();
+                BookingInfo booking = gson.fromJson(json, BookingInfo.class);
+                Bookings.add(booking);
+            }
+            return Bookings;
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
 
     public BookingInfo jsonToBooking(String json) {
         Gson gson = new Gson();

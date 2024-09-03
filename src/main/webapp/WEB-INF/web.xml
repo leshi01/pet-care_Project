@@ -37,6 +37,10 @@
         <servlet-class>servlet.Booking</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>GetBookings</servlet-name>
+        <servlet-class>servlet.GetBookings</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>EditUser</servlet-name>
         <servlet-class>servlet.EditUser</servlet-class>
     </servlet>
@@ -59,6 +63,10 @@
     <servlet-mapping>
         <servlet-name>Booking</servlet-name>
         <url-pattern>/Booking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetBookings</servlet-name>
+        <url-pattern>/GetBookings</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EditUser</servlet-name>

@@ -5,3 +5,8 @@ document.getElementById('chatGPT').addEventListener('click', function () {
 document.getElementById('editInfo').addEventListener('click', function () {
     window.location.href = 'EditUser.html';
 });
+
+document.getElementById('booking').addEventListener('click', function () {
+    window.location.href = 'KeeperBooking.html';
+});
+
