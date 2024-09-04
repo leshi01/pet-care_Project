@@ -1,5 +1,7 @@
 var LoggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
 var bookingid;
+var totalBookings = 0, totalMoney = 0, totalDays = 0;
+
 
 window.onload = function () {
     getBookings(LoggedInUser.keeper_id);
@@ -27,6 +29,21 @@ function displayBookings(bookings) {
     if (Array.isArray(bookings)) {
         bookings.forEach(booking => {
             bookingid = booking.booking_id;
+
+            if (booking.status === "finished") {
+                totalBookings++;
+                totalMoney += booking.price;
+                const fromDate = new Date(booking.fromdate);
+                const toDate = new Date(booking.todate);
+
+                const timeDifference = toDate - fromDate;
+
+                const dayDifference = timeDifference / (1000 * 60 * 60 * 24);
+
+                totalDays += Math.round(dayDifference);
+                console.log("Total Bookings: " + totalBookings + " Total Money: " + totalMoney + " Total Days: " + totalDays);
+            }
+
             if (booking.status === "requested") {
                 const bookingDiv = document.createElement('div');
                 bookingDiv.className = 'booking';
@@ -45,9 +62,40 @@ function displayBookings(bookings) {
 
                 container.appendChild(bookingDiv);
             }
+
         });
     } else {
         console.error('Invalid data format:', bookings);
+    }
+
+    if (document.getElementById('acceptButton') || document.getElementById('rejectButton')) {
+        document.addEventListener('click', function (event) {
+            if (event.target && (event.target.id === 'acceptButton' || event.target.id === 'rejectButton')) {
+                container.innerHTML = '';
+                const bookingDiv = document.createElement('div');
+                bookingDiv.className = 'booking';
+
+                bookingDiv.innerHTML = `
+                    <p>Total Bookings: ${totalBookings}</p>
+                    <p>Total days of care: ${totalDays}</p>
+                    <p>total income: ${totalMoney + "$"}</p>
+                `;
+
+                container.appendChild(bookingDiv);
+            }
+        });
+    }else {
+        const bookingDiv = document.createElement('div');
+        bookingDiv.className = 'booking';
+
+        bookingDiv.innerHTML = `
+            <p>Total Bookings: ${totalBookings}</p>
+            <p>Total days of care: ${totalDays}</p>
+            <p>total income: ${totalMoney + "$"}</p>
+        `;
+
+        container.appendChild(bookingDiv);
+
     }
 }
 

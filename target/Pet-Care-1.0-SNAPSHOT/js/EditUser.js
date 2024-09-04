@@ -29,7 +29,6 @@ function editUser() {
     const myForm = document.getElementById('formForEdit');
     const formData = new FormData(myForm);
 
-    // Correctly convert FormData to a JSON object
     const data = {};
     formData.forEach((value, key) => {
         data[key] = value;
