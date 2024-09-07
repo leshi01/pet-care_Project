@@ -173,10 +173,8 @@ public class EditPetOwnersTable {
         ArrayList<PetOwner> owners = new ArrayList<PetOwner>();
         ResultSet rs = null;
         try {
-            //if(type=="catkeeper")
             if ("all".equals(type)) {
-                rs = stmt.executeQuery("SELECT * FROM `petOwners` WHERE  `petOwners`.`owner_id` not in (select owner_id "
-                        + "from `bookings` where `status`='requested' or  `status`='accepted')\n" + "");
+                rs = stmt.executeQuery("SELECT * FROM `petOwners`");
             }
 
             while (rs.next()) {

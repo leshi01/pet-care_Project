@@ -45,13 +45,14 @@ function createTableFromJSON(data) {
 
 
 function getAllKeepers() {
-    // Make an AJAX request to fetch pet keepers
     $.ajax({
-        url: 'GetAllPetKeepers?', // Replace with the actual URL to your servlet
+        url: 'GetAllPetKeepers?',
         type: 'GET',
         dataType: 'json',
+        data: { type: "all" },
         success: function (data) {
             // Process the received data
+            console.log(data);
             displayPetKeepers(data);
         },
         error: function (error) {
@@ -98,7 +99,8 @@ function getAllOwners() {
         dataType: 'json',
         success: function (data) {
             // Process the received data
-            displayPetKeepers(data);
+            console.log(data);
+            displayPetOwners(data);
         },
         error: function (error) {
             console.error('Error fetching pet keepers:', error);
@@ -107,11 +109,11 @@ function getAllOwners() {
 }
 
 // Function to display pet keepers
-function displayPetKeepers(petKeepers) {
-    var petKeepersList = $('#context');
-    petKeepersList.empty();
+function displayPetOwners(petOwners) {
+    var petOwnersList = $('#context');
+    petOwnersList.empty();
 
-    if (petKeepers && petKeepers.length > 0) {
+    if (petOwners && petOwners.length > 0) {
 
         let tableHTML = `<table id="table">
                         <tr class="text">
@@ -121,16 +123,16 @@ function displayPetKeepers(petKeepers) {
 
 
         // Loop through each pet keeper and display their details
-        petKeepers.forEach(function (petKeeper) {
+        petOwners.forEach(function (petOwner) {
             tableHTML += '<tr class="text">' +
-                    '<td> ' + petKeeper.firstname + '</td>' +
-                    '<td> ' + petKeeper.lastname + '</td>' +
+                    '<td> ' + petOwner.firstname + '</td>' +
+                    '<td> ' + petOwner.lastname + '</td>' +
                     '</tr>';
         });
 
         tableHTML += ('</table>');
-        petKeepersList.append(tableHTML);
+        petOwnersList.append(tableHTML);
     } else {
-        petKeepersList.append('<p>No pet keepers found.</p>');
+        petOwnersList.append('<p>No pet Owner found.</p>');
     }
 }

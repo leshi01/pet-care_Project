@@ -56,13 +56,15 @@ public class GetAllPetKeepers extends HttpServlet {
             EditPetKeepersTable eut = new EditPetKeepersTable();
 
             // Retrieve all PetKeepers from the database
-            String type = request.getParameter("type");;
+            String type = request.getParameter("type");
+            if (type == null) {
+                type = "everyone";
+            }
             ArrayList<PetKeeper> petKeepers = eut.getAvailableKeepers(type);
 
             // Convert the list of PetKeepers to JSON
             Gson gson = new Gson();
             String json = gson.toJson(petKeepers);
-            System.out.println(petKeepers);
 
             // Send the JSON response
             out.println(json);
