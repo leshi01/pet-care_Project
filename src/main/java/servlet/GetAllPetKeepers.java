@@ -62,6 +62,7 @@ public class GetAllPetKeepers extends HttpServlet {
             // Convert the list of PetKeepers to JSON
             Gson gson = new Gson();
             String json = gson.toJson(petKeepers);
+            System.out.println(petKeepers);
 
             // Send the JSON response
             out.println(json);

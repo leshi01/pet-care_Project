@@ -136,6 +136,8 @@ public class EditPetKeepersTable {
                 rs = stmt.executeQuery("SELECT * FROM petkeepers WHERE catkeeper= '" + "true" + "'");
             } else if ("dogkeeper".equals(type)) {
                 rs = stmt.executeQuery("SELECT * FROM petkeepers WHERE dogkeeper= '" + "true" + "'");
+            }else if ("all".equals(type)) {
+                rs = stmt.executeQuery("SELECT * FROM petkeepers ");
             }
 
             while (rs.next()) {

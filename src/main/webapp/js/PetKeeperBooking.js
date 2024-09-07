@@ -93,7 +93,6 @@ function displayBookings(bookings) {
             <p>Total days of care: ${totalDays}</p>
             <p>total income: ${totalMoney + "$"}</p>
         `;
-
         container.appendChild(bookingDiv);
 
     }
