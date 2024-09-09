@@ -23,6 +23,13 @@ import java.util.logging.Logger;
  */
 public class EditPetKeepersTable {
 
+    public void deletePetKeeper(int id) throws SQLException, ClassNotFoundException {
+        Connection con = Connect.getConnection();
+        Statement stmt = con.createStatement();
+        String delete = "DELETE FROM petkeepers WHERE keeper_id = '" + id + "'";
+        stmt.executeUpdate(delete);
+    }
+
     public void addPetKeeperFromJSON(String json) throws ClassNotFoundException {
         PetKeeper user = jsonToPetKeeper(json);
         addNewPetKeeper(user);

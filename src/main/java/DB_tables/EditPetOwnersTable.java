@@ -24,6 +24,13 @@ import static com.mysql.cj.MysqlType.JSON;
  */
 public class EditPetOwnersTable {
 
+    public void deletePetOwner(int id) throws SQLException, ClassNotFoundException {
+        Connection con = Connect.getConnection();
+        Statement stmt = con.createStatement();
+        String delete = "DELETE FROM petowners WHERE owner_id = '" + id + "'";
+        stmt.executeUpdate(delete);
+    }
+
     public void addPetOwnerFromJSON(String json) throws ClassNotFoundException {
         PetOwner user = jsonToPetOwner(json);
         addNewPetOwner(user);
