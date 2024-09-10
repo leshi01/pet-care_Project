@@ -2,8 +2,10 @@ package servlet;
 
 
 
+import DB_tables.EditBooking;
 import DB_tables.EditPetKeepersTable;
 import DB_tables.EditPetOwnersTable;
+import DB_tables.EditRevieus;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,9 +31,14 @@ public class DeleteKeeper extends HttpServlet {
 
         try (PrintWriter out = response.getWriter()) {
             EditPetKeepersTable eut = new EditPetKeepersTable();
+            EditBooking eutB = new EditBooking();
+            EditRevieus eutR = new EditRevieus();
+
 
             try {
                 eut.deletePetKeeper(Integer.parseInt(id));
+                eutB.deleteBookingKeeper(Integer.parseInt(id));
+                eutR.deleteReviewKeeper(Integer.parseInt(id));
                 response.setStatus(200);
                 out.println("{ \"status\": \"success\", \"message\": \"Owner deleted successfully.\" }");
             } catch (ClassNotFoundException | SQLException ex) {

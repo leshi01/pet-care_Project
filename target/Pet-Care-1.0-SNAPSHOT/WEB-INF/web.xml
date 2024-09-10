@@ -45,6 +45,14 @@
         <servlet-class>servlet.EditUser</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>DeletKeeper</servlet-name>
+        <servlet-class>servlet.DeletKeeper</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteOwner</servlet-name>
+        <servlet-class>servlet.DeleteOwner</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>RegisterPet</servlet-name>
         <servlet-class>servlet.RegisterPet</servlet-class>
     </servlet>
@@ -63,6 +71,14 @@
     <servlet-mapping>
         <servlet-name>Booking</servlet-name>
         <url-pattern>/Booking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteOwner</servlet-name>
+        <url-pattern>/DeleteOwner</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeletKeeper</servlet-name>
+        <url-pattern>/DeletKeeper</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GetBookings</servlet-name>

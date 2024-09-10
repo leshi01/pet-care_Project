@@ -14,6 +14,13 @@ import java.util.logging.Logger;
 
 public class EditPet {
 
+    public void deletePet(int id) throws SQLException, ClassNotFoundException {
+        Connection con = Connect.getConnection();
+        Statement stmt = con.createStatement();
+        String delete = "DELETE FROM pets WHERE owner_id = '" + id + "'";
+        stmt.executeUpdate(delete);
+    }
+
     public ArrayList<Pet> getPets(String ownerId) throws SQLException, ClassNotFoundException {
         Connection con = Connect.getConnection();
         Statement stmt = con.createStatement();

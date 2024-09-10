@@ -1,4 +1,5 @@
-var context = document.getElementById("context");
+let context = document.getElementById("context");
+let isKeeper;
 
 document.getElementById('petKeepers').addEventListener('click', doPetKeepers);
 document.getElementById('petOwners').addEventListener('click', doPetOwners);
@@ -26,70 +27,21 @@ function doUsers() {
 
 }
 
-
-
-
-function createTableFromJSON(data) {
-    var html = "<table><tr><th>Category</th><th>Value</th></tr>";
-    for (const x in data) {
-        var category = x;
-        var value = data[x];
-        html += "<tr><td>" + category + "</td><td>" + value + "</td></tr>";
-    }
-    html += "</table>";
-    return html;
-
-}
-
-
-
-
 function getAllKeepers() {
     $.ajax({
         url: 'GetAllPetKeepers?',
         type: 'GET',
         dataType: 'json',
-        data: { type: "all" },
+        data: { type: "everyone" },
         success: function (data) {
-            // Process the received data
-            console.log(data);
-            displayPetKeepers(data);
+            isKeeper = true;
+            displayUsers(data);
         },
         error: function (error) {
             console.error('Error fetching pet keepers:', error);
         }
     });
 }
-
-// Function to display pet keepers
-function displayPetKeepers(petKeepers) {
-    var petKeepersList = $('#context');
-    petKeepersList.empty();
-
-    if (petKeepers && petKeepers.length > 0) {
-
-        let tableHTML = `<table id="table">
-                        <tr class="text">
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                        </tr>`;
-
-
-        // Loop through each pet keeper and display their details
-        petKeepers.forEach(function (petKeeper) {
-            tableHTML += '<tr class="text">' +
-                    '<td> ' + petKeeper.firstname + '</td>' +
-                    '<td> ' + petKeeper.lastname + '</td>' +
-                    '</tr>';
-        });
-
-        tableHTML += ('</table>');
-        petKeepersList.append(tableHTML);
-    } else {
-        petKeepersList.append('<p>No pet keepers found.</p>');
-    }
-}
-
 
 function getAllOwners() {
     // Make an AJAX request to fetch pet keepers
@@ -98,9 +50,8 @@ function getAllOwners() {
         type: 'GET',
         dataType: 'json',
         success: function (data) {
-            // Process the received data
-            console.log(data);
-            displayPetOwners(data);
+            isKeeper = false;
+            displayUsers(data);
         },
         error: function (error) {
             console.error('Error fetching pet keepers:', error);
@@ -108,31 +59,66 @@ function getAllOwners() {
     });
 }
 
-// Function to display pet keepers
-function displayPetOwners(petOwners) {
-    var petOwnersList = $('#context');
-    petOwnersList.empty();
+function displayUsers(User) {
+    let UserList = $('#context');
+    UserList.empty();
 
-    if (petOwners && petOwners.length > 0) {
+    if (User && User.length > 0) {
 
         let tableHTML = `<table id="table">
                         <tr class="text">
                             <th>First Name</th>
                             <th>Last Name</th>
+                            <th>Edit</th>
                         </tr>`;
 
-
-        // Loop through each pet keeper and display their details
-        petOwners.forEach(function (petOwner) {
+        User.forEach(function (user, index) {
             tableHTML += '<tr class="text">' +
-                    '<td> ' + petOwner.firstname + '</td>' +
-                    '<td> ' + petOwner.lastname + '</td>' +
-                    '</tr>';
+                '<td> ' + user.firstname + '</td>' +
+                '<td> ' + user.lastname + '</td>' +
+                '<td><button class="delete-btn" data-index="' + index + '">Delete</button></td>' +
+                '</tr>';
         });
 
         tableHTML += ('</table>');
-        petOwnersList.append(tableHTML);
+        UserList.append(tableHTML);
+
+        // Add event listener for delete buttons
+        $('.delete-btn').on('click', function () {
+            let userIndex = $(this).data('index');
+            deleteUser(User[userIndex]);
+        });
     } else {
-        petOwnersList.append('<p>No pet Owner found.</p>');
+        UserList.append('<p>No pet keepers found.</p>');
+    }
+}
+
+function deleteUser(user) {
+    if(isKeeper){
+        $.ajax({
+            url: 'DeleteKeeper',
+            type: 'POST',
+            data: { id: user.keeper_id },
+            success: function (response) {
+                // Refresh the user list after deletion
+                getAllKeepers();
+            },
+            error: function (error) {
+                console.error('Error deleting user:', error);
+            }
+        });
+    }else{
+        $.ajax({
+            url: 'DeleteOwner',
+            type: 'POST',
+            data: { id: user.owner_id },
+            success: function (response) {
+                // Refresh the user list after deletion
+                getAllOwners();
+            },
+            error: function (error) {
+                console.error('Error deleting user:', error);
+            }
+        });
     }
 }

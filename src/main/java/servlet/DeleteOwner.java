@@ -1,6 +1,10 @@
 package servlet;
 
+import DB_tables.EditBooking;
+import DB_tables.EditPet;
 import DB_tables.EditPetOwnersTable;
+import DB_tables.EditRevieus;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,9 +29,15 @@ public class DeleteOwner extends HttpServlet {
 
         try (PrintWriter out = response.getWriter()) {
             EditPetOwnersTable eut = new EditPetOwnersTable();
+            EditPet eutP = new EditPet();
+            EditBooking eutB = new EditBooking();
+            EditRevieus eutR = new EditRevieus();
 
             try {
                 eut.deletePetOwner(Integer.parseInt(id));
+                eutP.deletePet(Integer.parseInt(id));
+                eutB.deleteBookingOwner(Integer.parseInt(id));
+                eutR.deleteReviewOwner(Integer.parseInt(id));
                 response.setStatus(200);
                 out.println("{ \"status\": \"success\", \"message\": \"Owner deleted successfully.\" }");
             } catch (ClassNotFoundException | SQLException ex) {

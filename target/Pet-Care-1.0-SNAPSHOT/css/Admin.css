@@ -1,6 +1,8 @@
 body{
     background-color: rgb(124, 155, 166);
 
+    display: flex;
+    justify-content: center; /* Center horizontally */
     align-items: center;
     min-height: 100vh;
     margin: 0;

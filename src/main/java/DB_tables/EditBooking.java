@@ -14,6 +14,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditBooking {
+    public void deleteBookingOwner(int id) throws SQLException, ClassNotFoundException {
+        Connection con = Connect.getConnection();
+        Statement stmt = con.createStatement();
+        String delete = "DELETE FROM bookings WHERE owner_id = '" + id + "'";
+        stmt.executeUpdate(delete);
+    }
+
+    public void deleteBookingKeeper(int id) throws SQLException, ClassNotFoundException {
+        Connection con = Connect.getConnection();
+        Statement stmt = con.createStatement();
+        String delete = "DELETE FROM bookings WHERE keeper_id = '" + id + "'";
+        stmt.executeUpdate(delete);
+    }
 
     public ArrayList<BookingInfo> getBookings(String keeperId) throws SQLException, ClassNotFoundException {
         Connection con = Connect.getConnection();
